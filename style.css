@@ -69,6 +69,13 @@ h1 ~ p{
     border-radius: 50%;
     transform: scale(1.2);
 }
+a:link{
+    text-decoration: none;
+    color: rgba(41, 12, 12, 0.473);
+}
+a:hover{
+    color: rgba(22, 8, 8, 0.74)
+}
 
 /* SECTION 2 histoire */
 
