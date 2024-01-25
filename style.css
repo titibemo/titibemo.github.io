@@ -139,6 +139,7 @@ a:hover{
         align-items: center;
         align-content: center;
         padding: 5px;
+        opacity: 0;
     }
     .explications {
         display: flex;
@@ -147,6 +148,7 @@ a:hover{
         align-items: center;
         align-content: center;
         padding: 5px;
+        opacity: 0;
         
         
     }
@@ -331,6 +333,7 @@ a:hover{
 @keyframes apparition{
     0%{
         transform:translateX(-200px);
+        opacity: 0;
     }
     100%{
         transform:translateX(0);
@@ -338,10 +341,11 @@ a:hover{
 }
 @keyframes apparition2{
     0%{
-        transform:translateX(200px);
+        opacity: 0;
     }
     100%{
         transform:translateX(0);
+        opacity: 1;
     }
 }
 
@@ -369,6 +373,10 @@ a:hover{
     }
     .ingredients-theme{
         margin-top: -20px;
+    }
+
+    .btn1 span, .btn2 span{
+        top: 10px;
     }
 }
 
@@ -434,18 +442,21 @@ a:hover{
         padding-bottom: 50px;
         
     }
-    .p{
-        background-color: rgba(211, 211, 211, 0.315);
-        display: flex;
-        width: 100%;
-        margin-left: 20px;
-        margin-right: auto;
-        justify-content: center;
-        align-items: center;
+
+    .ingredients, .explications{
+        opacity: 1;
     }
+
     .ingredients-theme{
 
         margin-top: -15px;
+    }
+
+    .btn1, .btn2{
+        padding: 0.5em;
+    }
+    .btn1 span, .btn2 span{
+        display: none;
     }
     
 
