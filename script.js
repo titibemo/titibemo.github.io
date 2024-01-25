@@ -16,11 +16,18 @@ observer1.observe(ingredients);
    
         if ( (entry.isIntersecting && window.innerWidth > 700) ){
             entry.target.style.animationName = "apparition";
-            entry.target.style.animationDuration = "2s";
+            entry.target.style.animationDuration = "3s";
+            opacity();
 
-        } else entry.target.style.animationName = "";
+        }
         console.log(entries);
     }
+
+function opacity(){
+    ingredients.style.opacity = 1;
+    explications.style.opacity = 1;
+}
+
 
 
     ////////////////////
@@ -39,9 +46,10 @@ observer2.observe(explications);
    
         if ( (entry.isIntersecting && window.innerWidth > 700)){
             entry.target.style.animationName = "apparition2";
-            entry.target.style.animationDuration = "2s";
+            entry.target.style.animationDuration = "4s";
+            opacity();
 
-        } else entry.target.style.animationName = "";
+        } /*else entry.target.style.animationName = ""*/;
         console.log(entries);
     }
     
@@ -52,13 +60,13 @@ let btn2 = document.querySelector('.btn2')
 let p = document.querySelector('.p')
 
 btn1.addEventListener('mouseover', ()=> {
-    p.textContent = "Lorsque les temps d'attentes sont très longues, notre recette se pose et regarde pour se divertir quelques series ou films (Majoritairement en anglais !). Il emprunte parfois d'autres recettes (Cappucino ou divers thés) ou accessoires (Plaid) pour être le plus confortable possible ";    
+    p.textContent = "Lorsque les temps d'attentes sont très longues, notre recette se pose et regarde pour se divertir quelques series ou films (Majoritairement en anglais !)";    
 
 
 })
 
 btn2.addEventListener('mouseover', function () {
-    p.textContent = "Passionné de guitare acoustique, vous pourrez admirez de temps en temps quelques mélodies interprétés pendant le temps de repos";
+    p.textContent = "Passionné de guitare acoustique, vous pourrez admirez de temps en temps quelques mélodies interprétées pendant le temps de repos";
 })
 
 
@@ -90,5 +98,6 @@ buttons.forEach((button) =>{
         
     });
 });
+
 
 
