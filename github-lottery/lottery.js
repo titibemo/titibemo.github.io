@@ -196,7 +196,7 @@
        index+=1;
        if(index==6){
           clearTimeout(tx);
-          //musicEnd();
+          musicEnd();
           let p = document.createElement("p")
           let p2 = document.createElement("p")
           p.setAttribute("id", "fin")
@@ -219,7 +219,7 @@
     }
  }
 ///musique
-/*
+
 const musiqueChoix = new Audio('./meow.mp3');
 const musiqueTirage = new Audio ('./suspense.mp3')
 const musiqueBon = new Audio ('./wow.mp3')
@@ -237,7 +237,7 @@ const musiqueEnd = new Audio ('./carey.mp3')
     function musicEnd (){
       musiqueEnd.play()
     }
-*/
+
  //////// style /////
 
 
