@@ -1,342 +1,269 @@
 "use strict"
-/*---------------------------------------------------------*/
 
-//<canvas id="canvas" width="260" height="495"> </canvas> 
-    //<button class="unblock">débloquer la balle</button>
+   let button = document.createElement("button")
+   button.style.border = "none"
+   button.style.cursor = "pointer"
+   button.style.display = "block"
+   button.style.width = "300px"
+   button.style.backgroundColor = "green"
+   button.style.padding = "10px"
+   button.style.fontSize = "13pt"
+   button.style.color = "white"
+   button.style.textDecoration = "none"
+   button.style.margin = "10px auto"
+   button.style.marginBottom = "10px"
+   button.style.borderRadius = "20px"
+   button.textContent = "Play lottery"
+   document.body.append(button)
 
-    const canvas = document.createElement("canvas")
-    canvas.getAttribute("id", "canvas")
-    canvas.width = "260"
-    canvas.height = "495"
-    document.body.append(canvas)
+   button.addEventListener("click", creerGrille, {once: true})
+   button.addEventListener("click", texte)
+   button.addEventListener("click", musicBg, {once: true})
 
+   let divCont = document.createElement("div")
+   divCont.setAttribute("id", "cont")
+   document.body.append(divCont)
 
-//const canvas = document.getElementById('canvas');
-const ctx = canvas.getContext('2d');
-//const gm = true;
-const ball_speed = 8;
-let xspeed = 0;
-let yspeed = 0;
-let com_score = 0;
-let player_score = 0;
-const x_min=15;
-const x_max=230;
-const y_min=15;
-const y_max=300;
-canvas.style.margin ="10px"
-let relativeX =0
-let relativeY =0
-let test = document.getElementById('test');
-let jouer = false;
+   let divGrille = document.createElement("div")
+   divGrille.setAttribute("id", "grille")
+   divCont.append(divGrille)
 
+   let divTirage= document.createElement("div")
+   divTirage.setAttribute("id", "tirage")
+   divCont.append(divTirage)
 
-document.addEventListener("mousedown", start);
-document.addEventListener("mouseup", stop);
-document.addEventListener("touchstart", start);
-document.addEventListener("touchend", stop);
+   let divCtirage = document.createElement("div")
+   divCtirage.setAttribute("id", "ctirage")
+   divTirage.append(divCtirage)
 
-function start(e) {
-    
-    mouseMoveHandler(e)
-    document.addEventListener("mousemove", dessiner)
-    document.addEventListener("touchmove", dessiner)
-  }
+   let divChoix = document.createElement("div")
+   divChoix.setAttribute("id", "choix")
+   divCtirage.append(divChoix)
 
-function stop() {
-    document.removeEventListener("mousemove", dessiner);
-    document.removeEventListener("touchmove", dessiner);
-  }
+   let divRes = document.createElement("div")
+   divRes.setAttribute("id", "res")
+   divCtirage.append(divRes)
 
-function dessiner(positionSouris) {
-    ctx.moveTo(relativeX, relativeY);
-    mouseMoveHandler(positionSouris); 
-  }
-
-
-function mouseMoveHandler(e) {
-    let relativeX = (e.clientX - canvas.offsetLeft) || (e.touches[0].clientX) ;
-    let relativeY = (e.clientY -canvas.offsetTop) || (e.touches[0].clientY);
-    if(relativeX > 0 && relativeX < canvas.width-30) {
-        pMallet.x = relativeX;
-    }
-        //360
-    if(relativeY > 18 && relativeY < 465){
-        pMallet.y = relativeY;
-    }    
- }
+   let divBon = document.createElement("div")
+   divBon.textContent = 0
+   divBon.setAttribute("id", "bon")
+   divCtirage.append(divBon)
 
    
 
-    //ligne interieur
-function draw_rect(x,y,w,h,b){
-    
-    ctx.beginPath();
-    if(b)
-    {
-        ctx.strokeStyle = "green"; // couleur contour
-        ctx.lineWidth = 10;
+    let i=1;
+    let nbr=0;
+
+ 
+   function texte (){
+      button.textContent = "choose 6 numbers"
+   }
+
+ function creerGrille(){
+   //button.style.visibility = "hidden";
+    let t=setTimeout("creerGrille()",50);
+    let bouton =document.createElement("div");
+    bouton.style.width = "26px"
+    bouton.style.height = "26px"
+    bouton.style.textAlign = "center"
+    bouton.style.border = "solid 1px green"
+    bouton.style.display = "flex"
+    bouton.style.display = "inline-block"
+    bouton.style.margin = "3px"
+    bouton.style.cursor = "pointer"
+    bouton.style.color = "red"
+   
+    bouton.innerHTML=i;
+    bouton.setAttribute("id",i);
+    bouton.addEventListener("click", function() {
+       ajouter(bouton);
+    })
+
+
+    bouton.addEventListener("mouseenter", hover)
+    bouton.addEventListener("mouseleave", nohover)
+
+   function hover(){
+   bouton.style.backgroundColor = "lightgreen"
+   }
+   function nohover(){
+      bouton.style.backgroundColor = "#FFF"
+      }
+
+    document.getElementById("grille").append(bouton);
+    if(i%7==0){
+       let br=document.createElement("br");
+       document.getElementById("grille").append(br);
     }
-    else
-    {
-        ctx.strokeStyle = "green"; // couleur intérieur
-        ctx.lineWidth = 2;
-    }    
-    ctx.strokeRect(x,y,w,h);
-    ctx.closePath();
+    i+=1;
+    if(i>49)
+       clearTimeout(t);
  }
-
-    //cage/but, demi-cercle
-function draw_goal(x,y,r,s)
-{
-    ctx.beginPath();
-    ctx.lineWidth=2; 
-    if(s)
-        ctx.arc(x, y, r, 0, Math.PI, false);
-    else
-    ctx.arc(x, y, r, Math.PI, 0, false);
-    ctx.strokeStyle = "blue"; // couleur demi-cercle
-    ctx.stroke();
-    ctx.closePath();
- }
-
-    //ligne milieu
-function draw_circle(x,y,r,w)
-{
-    ctx.beginPath();
-    ctx.lineWidth=w;
-    ctx.arc(x, y, r, 0, Math.PI*2, false);
-    ctx.strokeStyle = "red"; // ligne milieu
-    ctx.stroke();
-    ctx.closePath();
- }
-
-    
-function draw_filled_circle(x,y,r,d)
-{
-    ctx.beginPath();
-    ctx.arc(x, y, r, 0, Math.PI*2);
-    if(d==1)
-    {
-        ctx.fillStyle = "red"; //joueur
-        ctx.strokeStyle = "red"; //joueur
+ 
+ function ajouter(ob){
+    if(nbr<6){
+       ob.style.visibility="hidden";
+       let nbouton=document.createElement("div");
+       nbouton.style.width = "26px"
+       nbouton.style.height = "26px"
+       nbouton.style.textAlign = "center"
+       nbouton.style.border = "solid 1px green"
+       nbouton.style.display = "inline-flex"
+       nbouton.style.alignItems = "center"
+       nbouton.style.justifyContent = "center"
+       nbouton.style.margin = "3px"
+       nbouton.style.color = "red"
+       nbouton.className="nbouton";
+       nbouton.setAttribute("id","ch"+nbr);
+       nbouton.innerHTML=ob.textContent;
+       document.getElementById("choix").append(nbouton);
+       choix[nbr]=ob.firstChild.nodeValue;
+       nbr+=1;
+       if(nbr==6){
+          ztirage();
+          musicTirage();
+          musiqueChoix.pause()
+       }
     }
-    else if(d==2)
-    {
-        ctx.fillStyle = "green"; //adversaire
-        ctx.strokeStyle = "green"; // adversaire
+ }
+
+ let j=0;
+ 
+ function ztirage(){
+    setTimeout("ztirage()",100);
+    if(j<6){
+       let zbouton=document.createElement("div");
+       zbouton.style.width = "26px"
+       zbouton.style.height = "26px"
+       zbouton.style.textAlign = "center"
+       zbouton.style.border = "solid 1px green"
+       zbouton.style.backgroundColor = "#F8F8F8"
+       zbouton.style.display = "inline-flex"
+       zbouton.style.alignItems = "center"
+       zbouton.style.justifyContent = "center"
+       zbouton.style.margin = "3px"
+       zbouton.style.color = "red"
+       zbouton.innerHTML=0;
+       zbouton.setAttribute("id","res"+j);
+       document.getElementById("res").append(zbouton);
+       j+=1;
+       if(j==6){
+         let p2 = document.createElement("p")
+         p2.textContent = "Good luck :"
+         divChoix.append(p2)
+          document.getElementById("bon").style.visibility="visible";
+          tirage();
+          musicTirage();
+       }
     }
-    else
-    {
-        ctx.fillStyle = "blue"; //pad
-        ctx.strokeStyle = "yellow"; // pad
-    }    
-        
-    ctx.fill();
-    ctx.lineWidth = 2; //bordure pad
-    ctx.stroke();
-    ctx.closePath();
  }
 
-function draw_board()
-{
-    draw_rect(0,0,260,495,1); //contour ext
-    draw_rect(15,22,230,452,0); // contour int
-    draw_goal(130,22,52,1); // demi cercle int. adverse
-    draw_goal(130,22,112,1); // demi cercle ext. adverse
-    draw_goal(130,472,52,0); // demi cercle int. joueur
-    draw_goal(130,472,112,0); // demi cercle ext. joueur
-    draw_circle(130,243,30,2); // cercle centre
-    draw_circle(130,243,4,2); // petit cercle interieur
-    
-    ctx.beginPath();
-    ctx.moveTo(15, 243); // trait milieu 
-    ctx.lineTo(245, 243); // trait milieu 
-    ctx.stroke();
-    ctx.closePath();
+ let index=0;
+ let rep=0;
+ let tab=new Array();
+ let itr=50;
 
-    ctx.beginPath();
-    ctx.moveTo(95, 22); // longueur but adv
-    ctx.lineTo(165, 22); // longueur but adv
-    ctx.lineWidth = 6;
-    ctx.strokeStyle = "#000"; //couleur but adv.
-    ctx.stroke();
-    ctx.closePath();
+ function tirage(){
+    let tx=setTimeout("tirage()",40);
+    rep+=1;
+    if(rep<itr){
+       for(let k=index+1;k<6;k++)
+          document.getElementById("res"+k).innerHTML=Math.ceil(Math.random()*49);
 
-    ctx.beginPath();
-    ctx.moveTo(95, 475); // longueur but joueur
-    ctx.lineTo(165, 475); // longueur but joueur
-    ctx.stroke();
-    ctx.closePath();
-
-    ctx.font = "25px Arial"; // taille score
-    ctx.lineWidth = 2
-    ctx.strokeText(com_score,220,200);
-    ctx.strokeText(player_score,220,295);
- }
-
-function distance(x1,y1,x2,y2)
-{
-    let tempx = x2-x1;
-    let tempy = y2-y1;
-    tempx*=tempx;
-    tempy*=tempy;
-    return Math.sqrt(tempx+tempy);
- }
-
-
-let Mallet = function(x,y,r)
-{
-    this.x = x;
-    this.y = y;
-    this.radius = r;
- }
-    // Player's object
-let pMallet = new Mallet(130,canvas.height-50,15);
-    
-let cMallet = new Mallet(130,50,15);
-
-    // Ball class
-let Ball = function (x,y,r) {
-    this.x = x;
-    this.y = y;
-    this.radius = r;
-}
-    // ball object
-let ball = new Ball(canvas.width/2,canvas.height-100,8); 
-  
-function play()
-{
-
-    const ricoche =  new Audio('./music-hockey/hit.wav');
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    draw_board();
-    draw_filled_circle(pMallet.x,pMallet.y,pMallet.radius,1);   
-    draw_filled_circle(cMallet.x,cMallet.y,cMallet.radius,2);   
-    draw_filled_circle(ball.x,ball.y,ball.radius,0);
-    if(ball.x + xspeed > canvas.width-ball.radius-15 || ball.x + xspeed < ball.radius + 15) {
-        xspeed *= -1;
-        palet();
+       let v=Math.ceil(Math.random()*49);
+       document.getElementById("res"+index).innerHTML=v;
+       if(rep==itr-1){
+          if(tab.indexOf(v)==-1){
+             tab[index]=v;
+             for(let k=0;k<6;k++){
+                if(document.getElementById("ch"+k).firstChild.data==tab[index]){
+                  musicBon();
+                   document.getElementById("ch"+k).style.backgroundColor="green";
+                   document.getElementById("res"+index).style.backgroundColor="green";
+                   document.getElementById("ch"+k).style.color="#FFF";
+                   document.getElementById("res"+index).style.color="#FFF";
+                   document.getElementById("bon").innerHTML=parseInt(document.getElementById("bon").textContent)+1;
+                  
+                }
+             }
+          }
+          else
+             rep=itr-2;
+       }
     }
-            
-    function palet () {
-        ricoche.play();
-     }
-
-    const musiqueGoal = new Audio ('./music-hockey/goal.mp3')
-
-    function musicGoal (){
-        musiqueGoal.play()
-     }
-
-    if(ball.x>95 && ball.x<165){
-        if(ball.y + yspeed > canvas.height+ball.radius-15){
-            musicGoal();
-            console.log("Computer Score");
-            ball.x = canvas.width/2;
-            ball.y = canvas.height/2+50;
-            xspeed = 0;
-            yspeed = 0 ;
-            com_score = com_score + 1;
-        }
-        else if(ball.y + yspeed < 15-ball.radius ){
-            musicGoal();
-            console.log("you Score");
-            ball.x = canvas.width/2;
-            ball.y = canvas.height/2-50;
-            xspeed = 0;
-            yspeed = 0;
-            player_score = player_score + 1; 
-         }
-     }
     else{
-        if(ball.y + yspeed > canvas.height-ball.radius-15  || ball.y + yspeed  < 15+ball.radius){
-            yspeed *= -1;
-         }
-     }
+       rep=0;
+       index+=1;
+       if(index==6){
+          clearTimeout(tx);
+          //musicEnd();
+          let p = document.createElement("p")
+          let p2 = document.createElement("p")
+          p.setAttribute("id", "fin")
+          p.style.textAlign = "center"
+          p.style.marginTop = "70px"
+          p.style.fontSize = "1.5em"
+          p.textContent = "Thank you for playing*"
+          document.body.append(p)
+
+          p2.setAttribute("id", "fin2")
+          p2.style.textAlign = "center"
+          p2.style.marginTop = "40px"
+          p2.style.fontSize = "1em"
+          p2.textContent = "*Next lottery soon"
+          document.body.append(p2)
+          console.log("end");
+
           
-        
-    let ed = true;
-    let er = 1;
-    let p2s;
-    if(ed){er=1;}
-        if((Math.abs(xspeed)+Math.abs(yspeed))<10&&ball.y<=canvas.height/2){
-            if(ball.y-10>cMallet.y){
-                cMallet.y+=2;
-             }
-            else{
-             cMallet.y-=2;
-             }
-         }
-        else if(cMallet.y>50){
-            cMallet.y-=2;
-         }
-        else if(cMallet.y<50){
-            cMallet.y+=2;
-         }
-
-    if(cMallet.x<x_min)
-      {cMallet.x=x_min;}
-    if(cMallet.x>x_max)
-      {cMallet.x=x_max;}
-    if(cMallet.y<y_min)
-      {cMallet.y=y_min;}
-    if(cMallet.y>y_max)
-      {cMallet.y=y_max;}
-    
-    if(!ed){p2s = 2;}
-    else{p2s=3;}
-    
-    if(ball.y<cMallet.y&&ball.x>cMallet.x-15&&ball.x<cMallet.x+15){p2s = -2;}
-    if(cMallet.x<ball.x+er){cMallet.x+=p2s;}if(cMallet.x>ball.x-er){cMallet.x-=p2s;}
-
-    let pDist = distance(pMallet.x,pMallet.y,ball.x,ball.y);    
-    let cDist = distance(cMallet.x,cMallet.y,ball.x,ball.y);          
-          
-    if(pDist<23)
-    {
-        palet();
-        let dx = ball.x - pMallet.x;
-        let dy = ball.y - pMallet.y;
-        dx/=15;
-        dy/=15;
-        xspeed = dx*ball_speed;
-        yspeed = dy*ball_speed;
-     }  
-
-    if(cDist<23)
-    {
-        palet();
-        let cdx = ball.x - cMallet.x;
-        let cdy = ball.y- cMallet.y;
-        cdx/=23;
-        cdy/=23;
-        xspeed = cdx*ball_speed;
-        yspeed = cdy*ball_speed;
-     }
-
-    ball.x += xspeed;
-    ball.y += yspeed;
-    xspeed *=0.99;
-    yspeed *=0.99;
-    ctx.font = "15px serif";
-    ctx.fillText("CPU", 200, 220);
-    ctx.fillText("PLAYER", 180, 270);
- }
-      
-    setInterval(play,10);   
-
-    const block = document.createElement("button")
-    block.textContent = "Unlock the ball"
-    block.style.position = "absolute"
-    block.style.top = "530px"
-    block.style.left = "10px"
-    block.style.backgroundColor = "lightblue"
-    document.body.append(block)
-    block.addEventListener("click", unblock)
-
-    function unblock (){
-        ball.x = canvas.width/2;
-        ball.y = canvas.height/2+50;
-        xspeed = 0;
-        yspeed = 0 ;
+       }
     }
+ }
+///musique
+/*
+const musiqueChoix = new Audio('./meow.mp3');
+const musiqueTirage = new Audio ('./suspense.mp3')
+const musiqueBon = new Audio ('./wow.mp3')
+const musiqueEnd = new Audio ('./carey.mp3')
+
+   function musicBg (){
+      musiqueChoix.play()
+    }
+    function musicTirage (){
+      musiqueTirage.play()
+    }
+    function musicBon (){
+      musiqueBon.play()
+    }
+    function musicEnd (){
+      musiqueEnd.play()
+    }
+*/
+ //////// style /////
+
+
+divCont.style.display = "grid";
+divCont.style.gridTemplateColumns = "1fr";
+
+divGrille.style.width = "50%"
+divGrille.style.display = "flex"
+divGrille.style.flexWrap = "wrap"
+divGrille.style.margin = "15px auto"
+
+divTirage.style.height = "220px";
+divTirage.style.margin = "auto";
+
+divChoix.style.textAlign = "center"
+
+divCtirage.style.display = "inline-block";
+divCtirage.style.textAlign = "center";
+
+divBon.style.fontSize = "72pt"
+divBon.style.margin = "30px auto"
+divBon.style.textAlign = "center"
+divBon.style.visibility = "hidden"
+divBon.style.backgroundColor = "green"
+divBon.style.color = "#FFF"
+divBon.style.width = "120px"
+divBon.style.height = "120px"
+divBon.style.borderRadius = "100px"
+divBon.style.lineHeight = "120px"
