@@ -1,286 +1,342 @@
-class thierry1  {
+"use strict"
+/*---------------------------------------------------------*/
 
-   constructor(){
-      this.init()
-   }
+//<canvas id="canvas" width="260" height="495"> </canvas> 
+    //<button class="unblock">débloquer la balle</button>
 
-   button = document.createElement("button")
-   divCont = document.createElement("div")
-   divGrille = document.createElement("div")
-   divTirage = document.createElement("div")
-   divCtirage = document.createElement("div")
-   divChoix = document.createElement("div")
-   divRes = document.createElement("div")
-   divBon = document.createElement("div")
+    const canvas = document.createElement("canvas")
+    canvas.getAttribute("id", "canvas")
+    canvas.width = "260"
+    canvas.height = "495"
+    document.body.append(canvas)
+
+
+//const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+//const gm = true;
+const ball_speed = 8;
+let xspeed = 0;
+let yspeed = 0;
+let com_score = 0;
+let player_score = 0;
+const x_min=15;
+const x_max=230;
+const y_min=15;
+const y_max=300;
+canvas.style.margin ="10px"
+let relativeX =0
+let relativeY =0
+let test = document.getElementById('test');
+let jouer = false;
+
+
+document.addEventListener("mousedown", start);
+document.addEventListener("mouseup", stop);
+document.addEventListener("touchstart", start);
+document.addEventListener("touchend", stop);
+
+function start(e) {
+    
+    mouseMoveHandler(e)
+    document.addEventListener("mousemove", dessiner)
+    document.addEventListener("touchmove", dessiner)
+  }
+
+function stop() {
+    document.removeEventListener("mousemove", dessiner);
+    document.removeEventListener("touchmove", dessiner);
+  }
+
+function dessiner(positionSouris) {
+    ctx.moveTo(relativeX, relativeY);
+    mouseMoveHandler(positionSouris); 
+  }
+
+
+function mouseMoveHandler(e) {
+    let relativeX = (e.clientX - canvas.offsetLeft) || (e.touches[0].clientX) ;
+    let relativeY = (e.clientY -canvas.offsetTop) || (e.touches[0].clientY);
+    if(relativeX > 0 && relativeX < canvas.width-30) {
+        pMallet.x = relativeX;
+    }
+        //360
+    if(relativeY > 18 && relativeY < 465){
+        pMallet.y = relativeY;
+    }    
+ }
+
+   
+
+    //ligne interieur
+function draw_rect(x,y,w,h,b){
+    
+    ctx.beginPath();
+    if(b)
+    {
+        ctx.strokeStyle = "green"; // couleur contour
+        ctx.lineWidth = 10;
+    }
+    else
+    {
+        ctx.strokeStyle = "green"; // couleur intérieur
+        ctx.lineWidth = 2;
+    }    
+    ctx.strokeRect(x,y,w,h);
+    ctx.closePath();
+ }
+
+    //cage/but, demi-cercle
+function draw_goal(x,y,r,s)
+{
+    ctx.beginPath();
+    ctx.lineWidth=2; 
+    if(s)
+        ctx.arc(x, y, r, 0, Math.PI, false);
+    else
+    ctx.arc(x, y, r, Math.PI, 0, false);
+    ctx.strokeStyle = "blue"; // couleur demi-cercle
+    ctx.stroke();
+    ctx.closePath();
+ }
+
+    //ligne milieu
+function draw_circle(x,y,r,w)
+{
+    ctx.beginPath();
+    ctx.lineWidth=w;
+    ctx.arc(x, y, r, 0, Math.PI*2, false);
+    ctx.strokeStyle = "red"; // ligne milieu
+    ctx.stroke();
+    ctx.closePath();
+ }
+
+    
+function draw_filled_circle(x,y,r,d)
+{
+    ctx.beginPath();
+    ctx.arc(x, y, r, 0, Math.PI*2);
+    if(d==1)
+    {
+        ctx.fillStyle = "red"; //joueur
+        ctx.strokeStyle = "red"; //joueur
+    }
+    else if(d==2)
+    {
+        ctx.fillStyle = "green"; //adversaire
+        ctx.strokeStyle = "green"; // adversaire
+    }
+    else
+    {
+        ctx.fillStyle = "blue"; //pad
+        ctx.strokeStyle = "yellow"; // pad
+    }    
+        
+    ctx.fill();
+    ctx.lineWidth = 2; //bordure pad
+    ctx.stroke();
+    ctx.closePath();
+ }
+
+function draw_board()
+{
+    draw_rect(0,0,260,495,1); //contour ext
+    draw_rect(15,22,230,452,0); // contour int
+    draw_goal(130,22,52,1); // demi cercle int. adverse
+    draw_goal(130,22,112,1); // demi cercle ext. adverse
+    draw_goal(130,472,52,0); // demi cercle int. joueur
+    draw_goal(130,472,112,0); // demi cercle ext. joueur
+    draw_circle(130,243,30,2); // cercle centre
+    draw_circle(130,243,4,2); // petit cercle interieur
+    
+    ctx.beginPath();
+    ctx.moveTo(15, 243); // trait milieu 
+    ctx.lineTo(245, 243); // trait milieu 
+    ctx.stroke();
+    ctx.closePath();
+
+    ctx.beginPath();
+    ctx.moveTo(95, 22); // longueur but adv
+    ctx.lineTo(165, 22); // longueur but adv
+    ctx.lineWidth = 6;
+    ctx.strokeStyle = "#000"; //couleur but adv.
+    ctx.stroke();
+    ctx.closePath();
+
+    ctx.beginPath();
+    ctx.moveTo(95, 475); // longueur but joueur
+    ctx.lineTo(165, 475); // longueur but joueur
+    ctx.stroke();
+    ctx.closePath();
+
+    ctx.font = "25px Arial"; // taille score
+    ctx.lineWidth = 2
+    ctx.strokeText(com_score,220,200);
+    ctx.strokeText(player_score,220,295);
+ }
+
+function distance(x1,y1,x2,y2)
+{
+    let tempx = x2-x1;
+    let tempy = y2-y1;
+    tempx*=tempx;
+    tempy*=tempy;
+    return Math.sqrt(tempx+tempy);
+ }
+
+
+let Mallet = function(x,y,r)
+{
+    this.x = x;
+    this.y = y;
+    this.radius = r;
+ }
+    // Player's object
+let pMallet = new Mallet(130,canvas.height-50,15);
+    
+let cMallet = new Mallet(130,50,15);
+
+    // Ball class
+let Ball = function (x,y,r) {
+    this.x = x;
+    this.y = y;
+    this.radius = r;
+}
+    // ball object
+let ball = new Ball(canvas.width/2,canvas.height-100,8); 
   
+function play()
+{
 
-      
-   init(){
-
-      //button
-   //const button = document.createElement("button")
-   this.button.style.border = "none"
-   this.button.style.cursor = "pointer"
-   this.button.style.display = "block"
-   this.button.style.width = "300px"
-   this.button.style.backgroundColor = "green"
-   this.button.style.padding = "10px"
-   this.button.style.fontSize = "13pt"
-   this.button.style.color = "white"
-   this.button.style.textDecoration = "none"
-   this.button.style.margin = "10px auto"
-   this.button.style.marginBottom = "10px"
-   this.button.style.borderRadius = "20px"
-   this.button.textContent = "Jouer à l'EuroMilli-oh-oh-oh (Son conseillé)"
-   document.body.append(this.button)
-
-      //addevent
-   this.button.addEventListener("click", this.creerGrille.bind(this), {once: true})
-   this.button.addEventListener("click", this.texte.bind(this))
-   this.button.addEventListener("click", this.musicBg.bind(this), {once: true})
-
-      //creation des elements
-   //let divCont = document.createElement("div")
-   this.divCont.setAttribute("id", "cont")
-   document.body.append(this.divCont)
-
-   //let divGrille = document.createElement("div")
-   this.divGrille.setAttribute("id", "grille")
-   this.divCont.append(this.divGrille)
-
-   //let divTirage= document.createElement("div")
-   this.divTirage.setAttribute("id", "tirage")
-   this.divCont.append(this.divTirage)
-
-   //let divCtirage = document.createElement("div")
-   this.divCtirage.setAttribute("id", "ctirage")
-   this.divTirage.append(this.divCtirage)
-
-   //let divChoix = document.createElement("div")
-   this.divChoix.setAttribute("id", "choix")
-   this.divCtirage.append(this.divChoix)
-
-   //let divRes = document.createElement("div")
-   this.divRes.setAttribute("id", "res")
-   this.divCtirage.append(this.divRes)
-
-   //let divBon = document.createElement("div")
-   this.divBon.textContent = 0
-   this.divBon.setAttribute("id", "bon")
-   this.divCtirage.append(this.divBon)
-
-
-   this.divCont.style.display = "grid";
-   this.divCont.style.gridTemplateColumns = "1fr";
-
-   this.divGrille.style.width = "50%"
-   this.divGrille.style.display = "flex"
-   this.divGrille.style.flexWrap = "wrap"
-   this.divGrille.style.margin = "15px auto"
-
-   this.divTirage.style.height = "220px";
-   this.divTirage.style.margin = "auto";
-
-   this.divChoix.style.textAlign = "center"
-
-   this.divCtirage.style.display = "inline-block";
-   this.divCtirage.style.textAlign = "center";
-
-   this.divBon.style.fontSize = "72pt"
-   this.divBon.style.margin = "30px auto"
-   this.divBon.style.textAlign = "center"
-   this.divBon.style.visibility = "hidden"
-   this.divBon.style.backgroundColor = "green"
-   this.divBon.style.color = "#FFF"
-   this.divBon.style.width = "120px"
-   this.divBon.style.height = "120px"
-   this.divBon.style.borderRadius = "100px"
-   this.divBon.style.lineHeight = "120px"
-
-   }
-
-   i = 1
-   nbr = 0
-
-  texte (){
-      this.button.textContent = "choisissez 6 numéroh-oh-oh"
-   }
-
-   creerGrille(){
-   //button.style.visibility = "hidden";
-      console.log(this);
-      let t=setTimeout(this.creerGrille.bind(this),50);
-      let bouton =document.createElement("div");
-      bouton.style.width = "26px"
-      bouton.style.height = "26px"
-      bouton.style.textAlign = "center"
-      bouton.style.border = "solid 1px green"
-      bouton.style.display = "flex"
-      bouton.style.display = "inline-block"
-      bouton.style.margin = "3px"
-      bouton.style.cursor = "pointer"
-      bouton.style.color = "red"
-   
-      bouton.innerHTML=this.i;
-      bouton.setAttribute("id",this.i);
-      /*probleme ici :
-      objectif : Lors de l'appui sur la variable "bouton", la méthode "ajouter" (avec comme paramètre la variable)" Ne fonctionne pas.
-      
-      */
-      bouton.addEventListener("click", () => {
-         console.log(this);
-         this.ajouter(bouton);
-   })
-   
-   document.getElementById("grille").append(bouton);
-   if(this.i%7==0){
-      let br=document.createElement("br");
-      document.getElementById("grille").append(br);
-   }
-   this.i+=1;
-   if(this.i>49)
-      clearTimeout(t);
- }
- 
- ajouter(ob){
-    if(this.nbr<6){
-       ob.style.visibility="hidden";
-       let nbouton=document.createElement("div");
-       nbouton.style.width = "26px"
-       nbouton.style.height = "26px"
-       nbouton.style.textAlign = "center"
-       nbouton.style.border = "solid 1px green"
-       nbouton.style.display = "inline-flex"
-       nbouton.style.alignItems = "center"
-       nbouton.style.justifyContent = "center"
-       nbouton.style.margin = "3px"
-       nbouton.style.color = "red"
-       nbouton.className="nbouton";
-       nbouton.setAttribute("id","ch"+this.nbr);
-       nbouton.innerHTML=ob.textContent;
-       document.getElementById("choix").append(nbouton);
-       choix[this.nbr]=ob.firstChild.nodeValue;
-       this.nbr+=1;
-       if(this.nbr==6){
-          this.ztirage();
-          this.musicTirage();
-          this.musiqueChoix.pause()
-       }
+    const ricoche =  new Audio('./music-hockey/hit.wav');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    draw_board();
+    draw_filled_circle(pMallet.x,pMallet.y,pMallet.radius,1);   
+    draw_filled_circle(cMallet.x,cMallet.y,cMallet.radius,2);   
+    draw_filled_circle(ball.x,ball.y,ball.radius,0);
+    if(ball.x + xspeed > canvas.width-ball.radius-15 || ball.x + xspeed < ball.radius + 15) {
+        xspeed *= -1;
+        palet();
     }
- }
+            
+    function palet () {
+        ricoche.play();
+     }
 
- j = 0
- 
+    const musiqueGoal = new Audio ('./music-hockey/goal.mp3')
 
+    function musicGoal (){
+        musiqueGoal.play()
+     }
 
- ztirage(){
-    setTimeout(this.ztirage.bind(this),100);
-    if(this.j<6){
-       let zbouton=document.createElement("div");
-       zbouton.style.width = "26px"
-       zbouton.style.height = "26px"
-       zbouton.style.textAlign = "center"
-       zbouton.style.border = "solid 1px green"
-       zbouton.style.backgroundColor = "#F8F8F8"
-       zbouton.style.display = "inline-flex"
-       zbouton.style.alignItems = "center"
-       zbouton.style.justifyContent = "center"
-       zbouton.style.margin = "3px"
-       zbouton.style.color = "red"
-       zbouton.innerHTML=0;
-       zbouton.setAttribute("id","res"+this.j);
-       document.getElementById("res").append(zbouton);
-       this.j+=1;
-       if(this.j==6){
-         let p2 = document.createElement("p")
-         p2.textContent = "Voici le tirage effectué par mon cerf de justice assermenté, Bo-ho-honne chance !"
-         this.divChoix.append(p2)
-          document.getElementById("bon").style.visibility="visible";
-          this.tirage();
-          this.musicTirage();
-       }
-    }
- }
-
- index = 0
- rep = 0
- tab = new Array()
- itr = 50
-
- tirage(){
-    let tx=setTimeout(this.tirage.bind(this),40);
-    this.rep+=1;
-    if(this.rep<this.itr){
-       for(let k=this.index+1;k<6;k++)
-          document.getElementById("res"+k).innerHTML=Math.ceil(Math.random()*49);
-
-       let v=Math.ceil(Math.random()*49);
-       document.getElementById("res"+this.index).innerHTML=v;
-       if(this.rep==this.itr-1){
-          if(this.tab.indexOf(v)==-1){
-             this.tab[this.index]=v;
-             for(let k=0;k<6;k++){
-                if(document.getElementById("ch"+k).firstChild.data==this.tab[this.index]){
-                  this.musicBon();
-                   document.getElementById("ch"+k).style.backgroundColor="green";
-                   document.getElementById("res"+this.index).style.backgroundColor="green";
-                   document.getElementById("ch"+k).style.color="#FFF";
-                   document.getElementById("res"+this.index).style.color="#FFF";
-                   document.getElementById("bon").innerHTML=parseInt(document.getElementById("bon").textContent)+1;
-                  
-                }
-             }
-          }
-          else
-             this.rep=this.itr-2;
-       }
-    }
+    if(ball.x>95 && ball.x<165){
+        if(ball.y + yspeed > canvas.height+ball.radius-15){
+            musicGoal();
+            console.log("Computer Score");
+            ball.x = canvas.width/2;
+            ball.y = canvas.height/2+50;
+            xspeed = 0;
+            yspeed = 0 ;
+            com_score = com_score + 1;
+        }
+        else if(ball.y + yspeed < 15-ball.radius ){
+            musicGoal();
+            console.log("you Score");
+            ball.x = canvas.width/2;
+            ball.y = canvas.height/2-50;
+            xspeed = 0;
+            yspeed = 0;
+            player_score = player_score + 1; 
+         }
+     }
     else{
-       this.rep=0;
-       this.index+=1;
-       if(this.index==6){
-          clearTimeout(tx);
-          this.musicEnd();
-          let p = document.createElement("p")
-          let p2 = document.createElement("p")
-          p.setAttribute("id", "fin")
-          p.style.textAlign = "center"
-          p.style.marginTop = "70px"
-          p.style.fontSize = "1.5em"
-          p.textContent = "Merci d'avoir joué, nous vous souhaitons un joyeux noël, de nombreux cadeaux* et à très bient-oh-oh-oh pour un nouveau tirage"
-          document.body.append(p)
-
-          p2.setAttribute("id", "fin2")
-          p2.style.textAlign = "center"
-          p2.style.marginTop = "40px"
-          p2.style.fontSize = "1em"
-          p2.textContent = "*Désolé, aucun cadeau ne vous sera envoyé même en remportant tout les numéros-ho-ho, les droits d'auteurs du titre de Mariah Carey étaient trop élevés cette année. "
-          document.body.append(p2)
-          console.log("c fin");
-
+        if(ball.y + yspeed > canvas.height-ball.radius-15  || ball.y + yspeed  < 15+ball.radius){
+            yspeed *= -1;
+         }
+     }
           
-       }
-    }
+        
+    let ed = true;
+    let er = 1;
+    let p2s;
+    if(ed){er=1;}
+        if((Math.abs(xspeed)+Math.abs(yspeed))<10&&ball.y<=canvas.height/2){
+            if(ball.y-10>cMallet.y){
+                cMallet.y+=2;
+             }
+            else{
+             cMallet.y-=2;
+             }
+         }
+        else if(cMallet.y>50){
+            cMallet.y-=2;
+         }
+        else if(cMallet.y<50){
+            cMallet.y+=2;
+         }
+
+    if(cMallet.x<x_min)
+      {cMallet.x=x_min;}
+    if(cMallet.x>x_max)
+      {cMallet.x=x_max;}
+    if(cMallet.y<y_min)
+      {cMallet.y=y_min;}
+    if(cMallet.y>y_max)
+      {cMallet.y=y_max;}
+    
+    if(!ed){p2s = 2;}
+    else{p2s=3;}
+    
+    if(ball.y<cMallet.y&&ball.x>cMallet.x-15&&ball.x<cMallet.x+15){p2s = -2;}
+    if(cMallet.x<ball.x+er){cMallet.x+=p2s;}if(cMallet.x>ball.x-er){cMallet.x-=p2s;}
+
+    let pDist = distance(pMallet.x,pMallet.y,ball.x,ball.y);    
+    let cDist = distance(cMallet.x,cMallet.y,ball.x,ball.y);          
+          
+    if(pDist<23)
+    {
+        palet();
+        let dx = ball.x - pMallet.x;
+        let dy = ball.y - pMallet.y;
+        dx/=15;
+        dy/=15;
+        xspeed = dx*ball_speed;
+        yspeed = dy*ball_speed;
+     }  
+
+    if(cDist<23)
+    {
+        palet();
+        let cdx = ball.x - cMallet.x;
+        let cdy = ball.y- cMallet.y;
+        cdx/=23;
+        cdy/=23;
+        xspeed = cdx*ball_speed;
+        yspeed = cdy*ball_speed;
+     }
+
+    ball.x += xspeed;
+    ball.y += yspeed;
+    xspeed *=0.99;
+    yspeed *=0.99;
+    ctx.font = "15px serif";
+    ctx.fillText("CPU", 200, 220);
+    ctx.fillText("PLAYER", 180, 270);
  }
-///musique
+      
+    setInterval(play,10);   
 
-musiqueChoix = new Audio('./assets-lottery/meow.mp3') 
-musiqueTirage = new Audio ('./assets-lottery/suspense.mp3') 
-musiqueBon = new Audio ('./assets-lottery/wow.mp3') 
-musiqueEnd = new Audio ('./assets-lottery/carey.mp3') 
+    const block = document.createElement("button")
+    block.textContent = "Unlock the ball"
+    block.style.position = "absolute"
+    block.style.top = "530px"
+    block.style.left = "10px"
+    block.style.backgroundColor = "lightblue"
+    document.body.append(block)
+    block.addEventListener("click", unblock)
 
-   musicBg (){
-      this.musiqueChoix.play()
+    function unblock (){
+        ball.x = canvas.width/2;
+        ball.y = canvas.height/2+50;
+        xspeed = 0;
+        yspeed = 0 ;
     }
-    musicTirage (){
-      this.musiqueTirage.play()
-    }
-    musicBon (){
-      this.musiqueBon.play()
-    }
-    musicEnd (){
-      this.musiqueEnd.play()
-    }
-
-
-};
