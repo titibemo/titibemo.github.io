@@ -60,6 +60,7 @@
    }
 
  function creerGrille(){
+    let i;
    //button.style.visibility = "hidden";
     let t=setTimeout("creerGrille()",50);
     let bouton =document.createElement("div");
