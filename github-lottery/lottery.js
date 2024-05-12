@@ -1,5 +1,4 @@
-
-export default class thierry1  {
+class thierry1  {
 
    constructor(){
       this.init()
