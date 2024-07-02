@@ -18,7 +18,7 @@
 
    button.addEventListener("click", creerGrille, {once: true})
    button.addEventListener("click", texte)
-   /*button.addEventListener("click", musicBg, {once: true})*/
+   button.addEventListener("click", musicBg, {once: true})
 
    let divCont = document.createElement("div")
    divCont.setAttribute("id", "cont")
@@ -60,7 +60,6 @@
    }
 
  function creerGrille(){
-    let i;
    //button.style.visibility = "hidden";
     let t=setTimeout("creerGrille()",50);
     let bouton =document.createElement("div");
@@ -122,8 +121,8 @@
        nbr+=1;
        if(nbr==6){
           ztirage();
-          /*musicTirage();
-          musiqueChoix.pause()*/
+          musicTirage();
+          musiqueChoix.pause()
        }
     }
  }
@@ -154,7 +153,7 @@
          divChoix.append(p2)
           document.getElementById("bon").style.visibility="visible";
           tirage();
-          /*musicTirage();*/
+          musicTirage();
        }
     }
  }
@@ -178,7 +177,7 @@
              tab[index]=v;
              for(let k=0;k<6;k++){
                 if(document.getElementById("ch"+k).firstChild.data==tab[index]){
-                  /*musicBon();*/
+                  musicBon();
                    document.getElementById("ch"+k).style.backgroundColor="green";
                    document.getElementById("res"+index).style.backgroundColor="green";
                    document.getElementById("ch"+k).style.color="#FFF";
@@ -197,7 +196,7 @@
        index+=1;
        if(index==6){
           clearTimeout(tx);
-          /*musicEnd();*/
+          musicEnd();
           let p = document.createElement("p")
           let p2 = document.createElement("p")
           p.setAttribute("id", "fin")
@@ -221,7 +220,6 @@
  }
 ///musique
 
-/*
 const musiqueChoix = new Audio('./meow.mp3');
 const musiqueTirage = new Audio ('./suspense.mp3')
 const musiqueBon = new Audio ('./wow.mp3')
@@ -239,7 +237,6 @@ const musiqueEnd = new Audio ('./carey.mp3')
     function musicEnd (){
       musiqueEnd.play()
     }
-*/
 
  //////// style /////
 
@@ -270,3 +267,15 @@ divBon.style.width = "120px"
 divBon.style.height = "120px"
 divBon.style.borderRadius = "100px"
 divBon.style.lineHeight = "120px"
+
+
+
+
+
+
+
+
+
+
+
+
