@@ -1,14 +1,16 @@
 "use strict";
 
-const skills = document.querySelector(".skills");
-const  options = {
+const services = document.querySelector(".services");
+const jsProducts = document.querySelector(".jsProducts");
+const products = document.querySelector(".products");
+const options = {
     threshold: 0.5
-    
 };
 
-const observer1 = new IntersectionObserver(setIndicator1, options);
+const observerRealisation = new IntersectionObserver(setIndicator1, options);
+const observerProducts = new IntersectionObserver(setIndicator2, options);
 
-observer1.observe(skills);
+observerRealisation.observe(services);
 
     function setIndicator1 (entries) {
 
@@ -17,16 +19,27 @@ observer1.observe(skills);
         if ( (entry.isIntersecting && window.innerWidth > 700) ){
             entry.target.style.animationName = "apparition";
             entry.target.style.animationDuration = "3s";
-            opacity();
-
         }
         console.log(entries);
     }
 
 function opacity(){
-    skills.style.opacity = 1;
+    services.style.opacity = 1;
 }
 
+observerProducts.observe(jsProducts);
+
+    function setIndicator2 (entries) {
+
+        const entry = entries[0];
+   
+        if ( (entry.isIntersecting && window.innerWidth > 700) ){
+          products.style.opacity = "1";
+          products.style.animationName = "apparition2";
+          products.style.animationDuration = "3s";
+        }
+        console.log(entries);
+    }
 
 
     ////////////////////
