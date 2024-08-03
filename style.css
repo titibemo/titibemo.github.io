@@ -216,7 +216,7 @@ header{
 .product img{
   width: 100%;
   object-fit: fill;
-  height: 250px;
+  height: 150px;
 }
 
 .product p{
