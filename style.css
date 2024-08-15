@@ -35,7 +35,7 @@ body{
 }
 
 header{
-  background: linear-gradient(#045454 , #111111 25%);
+  background: linear-gradient(#045454 , black 25%);
   background-size:cover;
   background-blend-mode:darken;
   background-repeat: no-repeat;
