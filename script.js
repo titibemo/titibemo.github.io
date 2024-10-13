@@ -1,5 +1,9 @@
 "use strict";
 
+
+//------------------ intersection observer
+
+
 const services = document.querySelector(".services");
 const jsProducts = document.querySelector(".jsProducts");
 const products = document.querySelector(".products");
@@ -42,7 +46,7 @@ observerProducts.observe(jsProducts);
     }
 
 
-    ////////////////////
+//-----------Slider
 
 
 const slides = document.querySelectorAll(".slide");
@@ -107,3 +111,26 @@ function changeSlideNext(){
 }
 
 changeSlideNext();
+
+// -------------------------------- Parralax --------------------------------
+let currentX;
+let currentY;
+const header = document.querySelector('.header');
+const title = document.querySelector('.title');
+
+
+header.addEventListener("mousemove", moveEffect)
+
+function moveEffect(e){
+
+  console.log(e);
+  
+    
+  currentX = window.innerWidth - e.pageX;
+  currentY = window.innerWidth - e.pageY;
+  
+  title.style.transition = ".1s";
+  title.style.top = -currentY/20 + 30 + "px";
+  title.style.left = -currentX/20 + 30 + "px";
+    
+}

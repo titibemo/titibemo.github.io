@@ -1,0 +1,311 @@
+*, ::before, ::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+  font-family: "rami";
+  src: url("./assets/fonts/Rami.ttf");
+}
+
+@font-face {
+  font-family: "lemon";
+  src: url("./assets/fonts/Lemon.otf");
+}
+@font-face {
+  font-family: "cake";
+  src: url("./assets/fonts/Cake.otf");
+}
+@font-face {
+  font-family: "rami";
+  src: url("./assets/fonts/Rami.ttf");
+}
+.animation {
+  margin: auto;
+  position: relative;
+  width: 100%;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+header {
+  position: relative;
+  background: rgba(70, 81, 116, 0.589) url("./assets/pictures/background.png");
+  background-blend-mode: darken;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 600px;
+}
+header .menuToggle {
+  display: none;
+}
+header .test {
+  position: absolute;
+  width: 100%;
+  height: 200px;
+  background-color: rgb(70, 81, 116);
+  opacity: 0.3;
+  clip-path: polygon(100% 0, 0 0, 0 100%);
+  transform: rotateY(180deg);
+  left: 30%;
+}
+header nav {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+}
+header nav .logo {
+  font-size: 2em;
+  margin: 10px;
+  font-family: "cake";
+  color: white;
+  font-weight: 300;
+}
+header nav ul {
+  display: flex;
+  list-style-type: none;
+  margin: 10px;
+  font-size: 1;
+  color: white;
+}
+header nav ul li {
+  font-family: "lemon";
+  cursor: pointer;
+  margin: 10px 30px 0 0;
+  font-size: 0.8em;
+}
+header nav ul li a {
+  text-decoration: none;
+  border: 1px solid rgb(255, 193, 165);
+  color: rgb(255, 193, 165);
+  padding: 5px;
+}
+header nav ul li a:hover {
+  background-color: rgb(255, 193, 165);
+  color: #0E1721;
+}
+header nav ul li:hover {
+  color: rgb(255, 193, 165);
+}
+header .restaurant {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  color: white;
+}
+header .restaurant .title {
+  position: relative;
+  margin: 20px 0 0 0;
+}
+header .restaurant p {
+  font-size: 0.8em;
+}
+header .restaurant h1 {
+  font-size: 3em;
+  margin: 0 10px 20px 0;
+  text-align: center;
+}
+header .restaurant a {
+  padding: 10px;
+  margin-top: 20px;
+  border: 1px solid rgb(255, 193, 165);
+  color: rgb(255, 193, 165);
+}
+header .restaurant a:hover {
+  background-color: rgb(255, 193, 165);
+  color: #0E1721;
+}
+
+section::before {
+  position: absolute;
+  content: "";
+  width: 100%;
+  background-color: #0E1721;
+  height: 75px;
+  top: -30px;
+  transform: skewY(-2deg);
+}
+
+section {
+  background-color: #0E1721;
+  color: white;
+  position: relative;
+}
+section h2 {
+  font-family: "lemon";
+  position: relative;
+  z-index: 10;
+  padding: 20px 0;
+  color: #f0cd99;
+  border-bottom: 1px solid;
+  border-image: linear-gradient(to right, black, #f0cd99, #f0cd99, black) 1;
+  width: fit-content;
+  margin: auto;
+  font-size: 0.8em;
+}
+section h3 {
+  font-family: "lemon";
+  padding: 20px 10px;
+  text-align: center;
+  font-size: 2em;
+}
+section .description {
+  padding-top: 40px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  color: white;
+  width: 80%;
+  margin: auto;
+}
+section .description .description-left div {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+section .description .description-left div p {
+  padding: 5px;
+  text-align: end;
+}
+section .description .description-left div p:nth-child(1) {
+  color: #f0cd99;
+}
+section .description .description-picture {
+  display: flex;
+  padding: 10px;
+}
+section .description img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 250px;
+  border-radius: 50%;
+  width: 250px;
+  margin: auto;
+}
+section .description .description-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+section .description .description-right p {
+  padding: 5px;
+}
+section .description .description-right p:nth-child(1) {
+  color: #f0cd99;
+}
+
+footer {
+  height: 500px;
+  width: 100%;
+  background-color: #0E1721;
+}
+footer h1 {
+  color: rgb(255, 193, 165);
+  text-align: center;
+}
+footer .cry {
+  position: fixed; /* Floating above */
+  transition: transform 0.23s; /* Sticking effect */
+  pointer-events: none; /* Allow clicking trough the div */
+}
+footer .divCatch {
+  height: 300px;
+  width: 300px;
+  background-color: red;
+}
+
+@media screen and (max-width: 1200px) {
+  header .desktop-menu {
+    display: none;
+  }
+  header .menuToggle {
+    display: block;
+    position: absolute;
+    right: 0px;
+    position: fixed;
+  }
+  header #hamburger-logo, header #hamburger-close {
+    cursor: pointer;
+    background: var(--main-color);
+    width: 60px;
+    display: block;
+    text-align: center;
+    padding: 10px;
+    margin-right: 5px;
+    color: white;
+    font-size: 3em;
+  }
+  header #hamburger-close {
+    color: rgb(255, 193, 165);
+  }
+  header .menu-mobile {
+    display: flex;
+    flex-direction: column;
+    background: #0E1721;
+    overflow: hidden;
+    width: 200px;
+    position: absolute;
+    right: -200px;
+    transform: translateX(-200px);
+    border: 1px solid white;
+  }
+  header #hamburger-logo,
+  header .menu-mobile {
+    transition: 0.2s;
+  }
+  header .menu, header #hamburger-close, header #hamburger, header .connexion, header .selfie {
+    display: none;
+  }
+  header #hamburger:checked ~ .menu-mobile {
+    transform: translate(0);
+  }
+  header #hamburger:not(:checked) + #hamburger-logo {
+    display: none;
+  }
+  header #hamburger:not(:checked) ~ #hamburger-close {
+    display: block;
+  }
+  header .menu-mobile a {
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+    border-bottom: 1px solid white;
+  }
+  header #hamburger-logo:hover {
+    background-color: rgb(255, 193, 165);
+  }
+  header .menu-mobile a:hover {
+    background-color: rgb(255, 193, 165);
+    color: black;
+  }
+  section .description {
+    display: flex;
+    flex-direction: column;
+  }
+  section .description .description-left div {
+    align-items: center;
+  }
+  section .description .description-left div p {
+    padding: 5px;
+    text-align: center;
+  }
+  section .description .description-right {
+    text-align: center;
+  }
+}
+@keyframes myAnim {
+  0%, 50%, 100% {
+    opacity: 1;
+  }
+  25%, 75% {
+    opacity: 0;
+  }
+}
+
+/*# sourceMappingURL=output.css.map */

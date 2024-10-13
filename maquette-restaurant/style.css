@@ -1,0 +1,851 @@
+*, ::before, ::after
+{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  --main-light-color: #FBF8F7;
+  --main-color: #20282F;
+  --main-color-title: #508960;
+}
+
+@font-face {
+  font-family: "italianno";
+  src: 
+      url("./assets/fonts/Italianno/Italianno-Regular.ttf"),
+}
+body{
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.main-sections-about-restaurant, .main-sections-reviews{
+  background-color: var(--main-light-color);
+  padding-top: 2%;
+}
+.main-sections-about-restaurant h2, .main-sections-reviews h2, .main-section-reservation h2{
+  font-family: "italianno";
+  font-size: clamp(2.3125rem, 1.8148rem + 2.6543vw, 3rem);
+  text-align: center;
+  color: var(--main-color);
+  font-weight: 300;
+  margin: auto;
+  width: fit-content;
+  border-bottom: 1px solid;
+  border-image: linear-gradient(to right, green , white , red ) 1;
+}
+
+.main-sections-services, .main-sections-contact{
+  background-color: var(--main-color);
+  padding-top: 2%;
+}
+.main-sections-services h2, .main-sections-contact h2{
+  font-family: "italianno";
+  text-align: center;
+  color: var(--main-light-color);
+  font-size: clamp(2.3125rem, 1.8148rem + 2.6543vw, 3rem);
+  font-weight: 300;
+  margin: auto;
+  width: fit-content;
+  border-bottom: 1px solid;
+  border-image: linear-gradient(to right, green , white , red ) 1;
+}
+
+header{
+  display: flex;
+  background: rgba(0, 0, 0, 0.2) url("./assets/pictures/restaurant-and-food/bg-pizza.jpg");
+  background-size: cover;
+  background-blend-mode: darken;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 600px;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo{
+  top: 0;
+  left: 0;
+  position: absolute;
+  margin: 10px;
+  width: 80px;
+  height: 30px;
+}
+
+.nav{
+  position: relative;
+  display: flex;
+  justify-content: center;
+  height: 50px;
+  align-items: center;
+  padding: 5px 10px;
+  background-color: var(--main-color);
+  text-align: center;
+  z-index: 10;
+}
+
+.menuToggle{
+  display: none;
+}
+
+.menu a{
+  font-size: 1.2em;
+  margin-left: 15px;
+  text-decoration: none;
+  color: white;
+}
+
+.title{
+  font-size: clamp(3.75rem, 3.0556rem + 3.7037vw, 7.5rem);
+  font-weight: 300;
+  font-family: "italianno";
+  background-image: linear-gradient(to right, rgba(0, 146, 70, 1) 42%, rgba(242, 242, 242, 1) 50%, rgba(206, 43, 55, 1) 56%);
+  color: transparent;
+  background-clip: text;
+  text-transform: uppercase;
+  padding: 15px;
+}
+
+.title ~ p{
+  text-align: center;
+  font-size: clamp(1.25rem, 1.163vw + 1.105rem, 2.5rem);
+  color: white;
+  padding: 0 30px; 
+}
+
+.description{
+  width: 70%;
+  margin: auto;
+}
+
+.rdv{
+  border-radius: 15px;
+  background-color: var(--main-color-title);
+  font-size: clamp(0.938rem, 0.781vw + 0.938rem, 1.875rem);
+  color: white;
+  margin-bottom: 5%;
+  height: fit-content;
+  padding: 3px;
+}
+
+/* ABOUT ME */
+
+
+/* Carroussel */
+
+#dots-con{
+  display: block;
+}
+
+#carroussel{
+  display: block;
+  width:250px;
+  height: 350px;
+  margin:0 auto;
+  position:relative;
+  overflow:hidden;
+  box-shadow:2px 5px 10px rgba(0,0,0,0.4);
+  margin-top: 5%;
+  background-color: aliceblue;
+}
+
+.slide{
+  width:100%;
+  height: 400px;
+}
+.slide p{
+  text-align: center;
+}
+
+.carroussel-image{
+  width:100%; 
+  height: 100%;
+  /*position: absolute;*/
+}
+
+.controls{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  font-size:1.2em;
+  padding:10px 5px;
+  border-radius:5px;
+  background-color: var(--main-color);
+  color: white;
+
+}
+
+.controls:hover{
+  background:#045454;
+  transition:0.3s;
+  color: white;
+}
+
+#left-arrow{
+  left: 0px;
+  z-index: 2;
+}
+
+#right-arrow{
+  right: 0px;
+  z-index: 2;
+}
+
+#dots-con{
+  text-align:center;
+}
+
+.dot{
+  display:inline-block;
+  background:lightgrey;
+  padding:8px;
+  border-radius:50%;
+  margin:10px 5px;
+
+}
+.active{
+  background: var(--main-sub-color);
+}
+
+/* fin carroussel */
+
+
+.about-me{
+  padding-top: 2%;
+  margin: auto;
+  display: flex;
+  width: 50%;
+}
+
+.about-restaurant{
+  margin: 10px 0 55px;;
+  display: flex;
+  width: 70%;
+  margin-left: 5%;
+}
+
+
+
+.selfie img{
+  width: 100%;
+  height: 100%;
+  min-width: 250px;
+  max-height: 400px;
+  padding-right: 20px;
+}
+.selfie{
+  display: flex;
+}
+.me{
+  margin-left: 15px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.about-me h3 {
+  font-size: 1.5em;
+  margin: 20px 0;
+}
+
+.me h3{
+  text-align: center;
+}
+
+.me li{
+  /*list-style: inside;*/
+  list-style-type: none;
+  margin-top: 10px;
+  margin-left: 10px;
+}
+.me li:last-child{
+  margin-bottom: 20px;
+}
+
+
+.about-me button{
+    display: inline;
+    justify-content: center;
+    text-align: center;
+    padding: 5px 10px;
+    margin: 20px auto;
+    border-radius: 15px;
+    background-color: var(--main-color);
+    font-size: 1em;
+    color: white; 
+}
+
+/* My services  */
+
+.services{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  width: 70%;
+  margin: auto;
+  text-align: center;
+  padding: 5% 0;
+  gap: 10px;
+}
+.service{
+border: solid 1px black;
+}
+.service img{
+  width: 100%;
+  object-fit: cover;
+  height: 125px;
+  
+}
+.service a{
+  color: var(--main-color);
+  font-size: 1.5em;
+}
+
+/* my partners */
+
+.main-sections-services{
+  padding-top: 2%;
+}
+
+.partners{
+  padding-top: 2%;
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  color: white;
+  width: 80%;
+  margin: auto;
+  
+}
+
+.partners-pictures{
+  display: flex;
+  flex-wrap: wrap;
+  margin: auto;
+  justify-content: center;
+}
+.partners-pictures img{
+  display: flex;
+  justify-content: space-around;
+  width: 70px;
+  height: 70px;
+  padding: 10px;
+}
+
+.partners-description{
+  margin: auto;
+}
+
+.partners-text{
+  text-align: center;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  
+}
+
+
+.partners-text div{
+  padding: 5px;
+  margin: 20px;
+}
+
+.partners-text div:nth-child(1){
+  background-color: #009246;
+}
+.partners-text div:nth-child(2), .partners-text div:nth-child(2) h4{
+  background-color: white;
+  color: black;
+}
+.partners-text div:nth-child(3){
+  background-color: #D22936;
+}
+
+.partners div > h3{
+  text-align: center;
+  color: white;
+  padding-bottom: 15px;
+  font-weight: 300;
+}
+.partners h4{
+  text-align: center;
+  font-size: 1.3em;
+  color: white;
+  padding-bottom: 15px;
+  font-weight: 300;
+}
+
+
+/* Mes produits */
+
+#carroussel, #dots-con{
+  display: block;
+}
+
+
+.reviews{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 250px));
+  width: 70%;
+  margin: auto;
+  text-align: center;
+  padding-top: 2%;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+.review{
+  box-shadow: black 1px solid;
+    box-shadow: 5px 5px 20px 5px rgba(0, 0, 0, 0.20);
+}
+.review img{
+  width: 100%;
+  object-fit: fill;
+  height: 200px;
+}
+.review p{
+  color: var(--main-color);
+  font-size: 1.2em;
+  margin: 10px;
+}
+
+.review .stars{
+  height: 5%;
+  width: 30%;
+}
+
+
+/* Contact  */
+
+.contact{
+  padding: 2%;
+  display: flex;
+  text-align: center;
+  gap: 10px;
+  color: white;
+  margin: auto;
+  width: 80%;
+  justify-content: space-between;
+}
+.contact h2{
+  text-align: center;
+  font-size: 3em;
+  color: var(--main-color);
+  font-weight: 300;
+  font-family: "italianno";
+  padding-bottom: 15px;
+}
+
+.contact h3 + p {
+  margin-top: 15px;
+}
+
+.contact p{
+  margin-top: 1px;
+  font-size: 1em;
+}
+.contact p ~ p{
+  padding-top: 3px;
+}
+.appointment, .opening{
+  display: flex;
+  width: 30%;
+  background-color: white;
+  color: black;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+
+
+/* FOOTER */
+
+footer{
+    background-color: rgba(0, 0, 0, 1);
+}
+
+.footer{
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  width: 100%;
+  margin: auto;
+  text-align: center;
+  padding: 2% 0 10px;
+  gap: 10px;
+  color: white;
+}
+
+.logo-footer{
+  width: 80px;
+  height: 30px;
+  margin: auto;
+}
+
+
+
+.footer a{
+  color: rgba(245, 245, 245, 0.425);
+  display: block;
+  padding-top: 5px;
+}
+.footer a:hover{
+  text-decoration: underline;
+  color: rgba(245, 245, 245, 0.76);
+}
+
+.footer h2{
+  font-weight: 300;
+  padding-bottom: 10px;
+  font-family: "italianno";
+  font-size: 2em;
+  text-align: center;
+  color: var(--main-color);
+  font-weight: 300;
+  color: white;
+}
+.footer p{
+  color: rgba(245, 245, 245, 0.425);
+  margin: 4px;
+}
+
+.social-media{
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.social-media img{
+  width: 30px;
+}
+.social-media a:nth-child(1) > img{
+  width: 40px;
+}
+footer hr{
+  margin-top: 10px;
+  width: 70%;
+  margin: auto;
+}
+.copyright{
+  text-align: center;
+  color: rgba(245, 245, 245, 0.425);
+  padding: 15px 0;
+}
+
+
+/* accordeon */
+
+.container-accordion{
+  width: 70%;
+  margin: auto;
+}
+
+.accordion {
+  background-color: white;
+  color: #444;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: center;
+  outline: none;
+  font-size: 15px;
+  transition: 0.4s;
+}
+
+.active, .accordion:hover {
+  background-color: var(--main-color);
+}
+
+.accordion:after {
+  content: '\002B';
+  color: #777;
+  font-weight: bold;
+  float: right;
+  margin-left: 5px;
+}
+
+.active:after {
+  content: "\2212";
+  color: white;
+}
+
+.panel {
+  padding: 0 18px;
+  background-color: white;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+  border: 1px solid var(--main-color);
+}
+
+.panel p{
+  padding: 15px 5px;
+}
+
+
+.main-container{
+  min-height: 65vh;
+}
+
+/* RESERVATION */
+.main-section-reservation{
+  flex-grow: 1;
+  padding-top: 2%;
+}
+.reservation{
+  padding-top: 2%;
+  display: flex;
+  justify-content: center;
+}
+.reservation form{
+  background-color: rgba(128, 128, 128, 0.151);
+  padding: 10px;
+} 
+.reservation img{
+  width: 300px;
+  margin-right: 10px;
+}
+.reservation p {
+  /*TODO*/
+}
+
+.hour-date{
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+}
+.reservation input{
+  margin: 5px;
+}
+.submit{
+  background-color: #009246;
+  color: white;
+  padding: 5px 10px 5px 10px;
+  border-radius: 15px;
+  float: right;
+  margin-left: 15px;
+}
+
+/* Autre media query */
+
+@media screen and (max-width: 1200px) {
+  header{
+  height: 450px;
+  }
+  .about-me{
+    width: 80%;
+  }
+  .partners{
+    width: 100%;
+  }
+  .reviews{
+    width: 100%;
+  }
+  .contact{
+    width: 100%;
+  }
+}
+
+
+/* tablette & mobile */
+
+
+@media screen and (max-width: 800px) {
+
+  /* HEADER AND NAV  */
+  header{
+    height: 40vh;
+  }
+  .title{
+    font-size: 3em;
+  }
+  .rdv{
+    font-size: 1.2em;
+  }
+  .menuToggle {
+    display: block;
+    position: absolute;
+    right: -0px;
+    position: fixed;
+  }
+
+  #hamburger-logo, #hamburger-close {
+    cursor: pointer;
+    background: var(--main-color);
+    width: 60px;
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    margin-right: 5px;
+  }
+  
+  nav {
+    display: flex;
+    flex-direction: column;
+    background: lightgray;
+    overflow: hidden;
+    width: 200px;
+    position: absolute;
+    right: -200px;
+    transform: translateX(-200px);
+  }
+  
+  #hamburger-logo,
+  nav {
+    transition: 0.2s;
+  }
+  
+  .menu, #hamburger-close, #hamburger, .connexion, .selfie{
+    display: none;
+  } 
+ 
+  #hamburger:checked ~ nav {
+    transform: translate(0);
+  }
+
+  #hamburger:not(:checked) + #hamburger-logo{
+    display: none;
+  }
+
+  #hamburger:not(:checked) ~ #hamburger-close{
+    display: block;
+  }
+  
+  nav a {
+    color: black;
+    text-decoration: none;
+    padding: 10px;
+    border-bottom: 1px solid var(--main-color);
+  }
+
+  #hamburger-logo:hover{
+    background-color: var(--main-sub-color);
+  }
+  nav a:hover {
+    background: var(--main-sub-color);
+  }
+
+  /* A propos du restaurant */
+
+  .about-restaurant{
+    width: 100%;
+    margin: auto;
+  }
+
+  .about-me{
+    flex-direction: column;
+  }
+  .me{
+    margin: auto;
+    width: 100%;
+  }
+
+  .selfie-phone{
+    width: 80%;
+    max-height: 300px;
+    display: block;
+    text-align: center;
+    margin: auto;
+  }
+
+  /* partners */
+
+  .partners{
+    grid-template-columns: 1fr;
+  }
+
+  .partners-pictures{
+    display: flex;
+    flex-wrap: wrap;
+    height: fit-content;
+    padding: 10px;
+    justify-content: center;
+  }
+  .partners-text{
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .contact{
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+  .appointment, .opening{
+    margin: auto;
+  }
+
+  .footer{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .footer div{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  /* reviews  */
+.reviews{
+  display: flex;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 250px));
+  /* width: 70%; */
+  margin: auto;
+  text-align: center;
+  padding-top: 2%;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.review{
+  width: 250px;
+}
+
+  /* carrousel */
+
+  #dots-con{
+    display: none;
+  }
+
+  .contact{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .appointment, .opening {
+    width: 250px;
+    height: 150px;
+  }
+}
+
+
+
+/* Animation keyframes */
+
+/*
+@keyframes fadePrev{
+  from{
+    opacity:0;
+    transform: translateX(100%);
+  }
+  to{
+    opacity:1;
+    transform: translateX(0%);
+  }
+}
+
+@keyframes fadeNext{
+  from{
+    opacity:0;
+    transform: translateX(-100%);
+  }
+  to{
+    opacity:1;
+    transform: translateX(0%);
+  }
+}
+*/
